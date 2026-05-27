@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "MENU | NOVA BURGER",
+  title: "MENU | ALIEN'S BURGER",
   description: "Découvrez notre menu : burgers smashés, sandwichs généreux et frites croustillantes.",
 };
 
@@ -19,8 +19,8 @@ export default function MenuPage() {
       <header className="menu-header">
         <a href="/">
           <Image
-            src="/images/logo-nova-burger.svg"
-            alt="Nova Burger logo"
+            src="/images/logo-aliens-burger.png"
+            alt="Alien's Burger logo"
             className="menu-page-logo"
             width={100}
             height={100}
@@ -33,7 +33,7 @@ export default function MenuPage() {
           <div key={i} className="menu-image-wrapper">
             <Image
               src={src}
-              alt={`Menu Nova Burger ${i + 1}`}
+              alt={`Menu Alien's Burger ${i + 1}`}
               width={900}
               height={1200}
               className="menu-image"

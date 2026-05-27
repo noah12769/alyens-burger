@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NOVA BURGER | Smash burgers & sandwiches généreux — Guadeloupe",
+  title: "ALIEN'S BURGER | Smash burgers & sandwiches généreux — Paris 13e",
   description:
-    "Nova Burger Guadeloupe : Des bons burgers smashés, des sandwiches généreux et des frites croustillantes. Peu de choses, mais bien faites & toujours avec le sourire. En livraison.",
+    "Alien's Burger Paris 13e : Des bons burgers smashés, des sandwiches généreux et des frites croustillantes. Peu de choses, mais bien faites & toujours avec le sourire. Sur place, à emporter ou en livraison.",
 };
 
 export default function RootLayout({

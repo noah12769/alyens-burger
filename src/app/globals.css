@@ -488,11 +488,9 @@ a {
 
 .image-type-2 {
   border-radius: 120px;
-  width: 300px;
   height: 500px;
   flex-shrink: 0;
   object-fit: cover;
-  object-position: center;
 }
 
 /* Varied border-radius per gallery image */
@@ -583,28 +581,28 @@ a {
   100% { transform: translateX(-33.333%); }
 }
 
-/* ===== FIXED BACKGROUND (pattern burger doodle) ===== */
+/* ===== FIXED BACKGROUND (logo Alien's Burger répété) ===== */
 .fixed-bg {
   position: fixed;
   inset: 0;
   background-color: #ffffff;
-  background-image: url('/images/burger-pattern.jpg');
-  background-size: 420px auto;
-  background-repeat: repeat;
   z-index: 0;
   pointer-events: none;
 }
-
 .fixed-bg::before {
   content: '';
   position: absolute;
   inset: 0;
+  background-color: rgba(46, 125, 50, 0.12);
 }
-
 .fixed-bg::after {
   content: '';
   position: absolute;
   inset: 0;
+  background-image: url('/images/logo-aliens-burger.png');
+  background-repeat: repeat;
+  background-size: 150px auto;
+  background-position: center;
 }
 
 /* ===== LOGO SPACER (gap transparent entre concept et location) ===== */
@@ -695,8 +693,8 @@ a {
 .section-menu {
   position: relative;
   z-index: 3;
-  background-color: #07080f;
-  background-image: url('/images/space-bg.jpg');
+  background-color: #2e7d32;
+  background-image: url('/images/hf_20260516_182739_108f80dc-a6b0-4aa1-8aa4-d0fa64b43768.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
