@@ -1205,20 +1205,27 @@ nextjs-portal { display: none !important; }
     display: none;
   }
 
-  /* ── Navbar : masque liens et bouton sur tablette/mobile ── */
-  .menu-wrapper,
-  .nav-right {
-    display: none;
-  }
-
+  /* ── Navbar : réduit sur tablette ── */
   .nav-logo-link {
-    margin-right: 0;
+    margin-right: 20px;
   }
 
   .nav-logo-image {
-    width: 90px;
-    height: 90px;
-    max-width: 90px;
+    width: 80px;
+    height: 80px;
+    max-width: 80px;
+  }
+
+  .menu-wrapper {
+    gap: 20px;
+  }
+
+  .nav-link {
+    font-size: 16px;
+  }
+
+  .nav-right .white-button {
+    padding: 14px 22px;
   }
 
   .heading {
@@ -1306,6 +1313,52 @@ nextjs-portal { display: none !important; }
 
 /* ===== MOBILE ≤767px ===== */
 @media screen and (max-width: 767px) {
+
+  /* ── Navbar mobile : tout visible, dimensions réduites ── */
+  .header-inner {
+    padding: 0 10px;
+  }
+
+  .nav-logo-link {
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-image {
+    width: 56px;
+    height: 56px;
+    max-width: 56px;
+  }
+
+  .menu-wrapper {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .nav-link {
+    font-size: 12px;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .nav-right .white-button {
+    padding: 9px 12px;
+    border-radius: 5px;
+  }
+
+  .nav-right .white-button .button-text-wrap {
+    height: 11px;
+  }
+
+  .nav-right .white-button .btn-front,
+  .nav-right .white-button .btn-hidden {
+    font-size: 11px;
+    letter-spacing: 0.03em;
+  }
 
   /* ── Hero : vidéo fixe pendant la section hero uniquement ── */
   .section-hero {
