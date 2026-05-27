@@ -82,7 +82,7 @@ export default function Home() {
       {/* HEADER */}
       <header className="header">
         <div className="header-inner">
-          <a href="/" style={{ marginRight: 60 }}>
+          <a href="/" className="nav-logo-link">
             <Image
               src="/images/logo-aliens-burger.png"
               alt="Alien's Burger logo"

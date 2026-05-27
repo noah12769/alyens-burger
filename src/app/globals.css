@@ -94,6 +94,10 @@ a {
   object-fit: contain;
 }
 
+.nav-logo-link {
+  margin-right: 60px;
+}
+
 .menu-wrapper {
   display: flex;
   flex-direction: row;
@@ -1199,6 +1203,22 @@ nextjs-portal { display: none !important; }
 
   .nav-button-text {
     display: none;
+  }
+
+  /* ── Navbar : masque liens et bouton sur tablette/mobile ── */
+  .menu-wrapper,
+  .nav-right {
+    display: none;
+  }
+
+  .nav-logo-link {
+    margin-right: 0;
+  }
+
+  .nav-logo-image {
+    width: 90px;
+    height: 90px;
+    max-width: 90px;
   }
 
   .heading {
