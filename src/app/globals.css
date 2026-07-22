@@ -1320,7 +1320,7 @@ nextjs-portal { display: none !important; }
     grid-template-columns: auto 1fr auto;
     align-items: center;
     column-gap: 8px;
-    padding: 0 14px;
+    padding: 0 10px;
   }
 
   .nav-logo-link {
@@ -1328,19 +1328,19 @@ nextjs-portal { display: none !important; }
   }
 
   .nav-logo-image {
-    width: 40px;
-    height: 40px;
-    max-width: 40px;
+    width: 56px;
+    height: 56px;
+    max-width: 56px;
   }
 
   .menu-wrapper {
     display: flex;
     justify-content: center;
-    gap: 14px;
+    gap: 10px;
   }
 
   .nav-link {
-    font-size: 12px;
+    font-size: 15px;
     white-space: nowrap;
   }
 
@@ -1350,7 +1350,7 @@ nextjs-portal { display: none !important; }
   }
 
   .nav-right .white-button {
-    padding: 8px 10px;
+    padding: 9px 12px;
     border-radius: 5px;
   }
 
@@ -1360,8 +1360,8 @@ nextjs-portal { display: none !important; }
 
   .nav-right .white-button .btn-front,
   .nav-right .white-button .btn-hidden {
-    font-size: 10px;
-    letter-spacing: 0.02em;
+    font-size: 11px;
+    letter-spacing: 0.03em;
     white-space: nowrap;
   }
 
