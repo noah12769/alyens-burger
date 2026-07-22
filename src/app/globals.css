@@ -698,7 +698,7 @@ a {
   position: relative;
   z-index: 3;
   background-color: #2e7d32;
-  background-image: url('/images/hf_20260516_182739_108f80dc-a6b0-4aa1-8aa4-d0fa64b43768.png');
+  background-image: url('/images/hf_20260516_182739_108f80dc-a6b0-4aa1-8aa4-d0fa64b43768.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -1314,39 +1314,43 @@ nextjs-portal { display: none !important; }
 /* ===== MOBILE ≤767px ===== */
 @media screen and (max-width: 767px) {
 
-  /* ── Navbar mobile : tout visible, dimensions réduites ── */
+  /* ── Navbar mobile : grid 3 colonnes pour que logo / liens (centrés) / bouton tiennent sur une ligne ── */
   .header-inner {
-    padding: 0 10px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: 8px;
+    padding: 0 14px;
   }
 
   .nav-logo-link {
-    margin-right: 8px;
-    flex-shrink: 0;
+    margin-right: 0;
   }
 
   .nav-logo-image {
-    width: 56px;
-    height: 56px;
-    max-width: 56px;
+    width: 40px;
+    height: 40px;
+    max-width: 40px;
   }
 
   .menu-wrapper {
     display: flex;
-    gap: 10px;
-    flex-shrink: 0;
+    justify-content: center;
+    gap: 14px;
   }
 
   .nav-link {
-    font-size: 15px;
+    font-size: 12px;
+    white-space: nowrap;
   }
 
   .nav-right {
     display: flex;
-    flex-shrink: 0;
+    justify-content: flex-end;
   }
 
   .nav-right .white-button {
-    padding: 9px 12px;
+    padding: 8px 10px;
     border-radius: 5px;
   }
 
@@ -1356,8 +1360,9 @@ nextjs-portal { display: none !important; }
 
   .nav-right .white-button .btn-front,
   .nav-right .white-button .btn-hidden {
-    font-size: 11px;
-    letter-spacing: 0.03em;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
   }
 
   /* ── Hero : vidéo fixe pendant la section hero uniquement ── */
