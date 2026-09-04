@@ -104,9 +104,9 @@ a {
 }
 
 .nav-logo-image {
-  width: 167px;
-  height: 167px;
-  max-width: 167px;
+  width: auto;
+  height: 90px;
+  max-width: none;
   object-fit: contain;
 }
 
@@ -973,6 +973,14 @@ nextjs-portal { display: none !important; }
   text-decoration: none;
 }
 
+.incipit-brand-link {
+  color: inherit;
+  text-decoration: none;
+}
+.incipit-brand-link:hover {
+  text-decoration: underline;
+}
+
 /* ===== POPUP - DELIVERY ===== */
 .popup-overlay {
   position: fixed;
@@ -1235,8 +1243,8 @@ nextjs-portal { display: none !important; }
 }
 
 .menu-page-logo {
-  width: 80px;
-  height: 80px;
+  width: auto;
+  height: 60px;
   object-fit: contain;
 }
 
@@ -1442,9 +1450,9 @@ nextjs-portal { display: none !important; }
   }
 
   .nav-logo-image {
-    width: 80px;
-    height: 80px;
-    max-width: 80px;
+    width: auto;
+    height: 56px;
+    max-width: none;
   }
 
   .nav-right .white-button {
@@ -1568,9 +1576,9 @@ nextjs-portal { display: none !important; }
   }
 
   .nav-logo-image {
-    width: 92px;
-    height: 92px;
-    max-width: 92px;
+    width: auto;
+    height: 60px;
+    max-width: none;
   }
 
   .nav-right {

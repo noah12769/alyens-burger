@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { COMBO_MENUS, A_LA_CARTE_ITEMS } from "../../lib/menu-data";
+import { COMBO_MENUS, A_LA_CARTE_ITEMS, DESSERT_ITEMS } from "../../lib/menu-data";
 
 export const metadata: Metadata = {
   title: "MENU | ALIEN'S BURGER",
@@ -28,6 +28,16 @@ const menuJsonLd = {
       "@type": "MenuSection",
       name: "À la carte",
       hasMenuItem: A_LA_CARTE_ITEMS.map((item) => ({
+        "@type": "MenuItem",
+        name: item.name,
+        description: item.description,
+        offers: { "@type": "Offer", price: item.price, priceCurrency: "EUR" },
+      })),
+    },
+    {
+      "@type": "MenuSection",
+      name: "Dessert",
+      hasMenuItem: DESSERT_ITEMS.map((item) => ({
         "@type": "MenuItem",
         name: item.name,
         description: item.description,
@@ -62,11 +72,11 @@ export default function MenuPage() {
       <header className="menu-header">
         <Link href="/">
           <Image
-            src="/images/logo-aliens-burger.png"
+            src="/images/logo-clean.png"
             alt="Alien's Burger logo"
             className="menu-page-logo"
-            width={100}
-            height={100}
+            width={520}
+            height={290}
           />
         </Link>
       </header>

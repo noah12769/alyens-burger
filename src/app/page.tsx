@@ -85,11 +85,11 @@ export default function Home() {
         <div className="header-inner">
           <Link href="/" className="nav-logo-link">
             <Image
-              src="/images/logo-aliens-burger.png"
+              src="/images/logo-clean.png"
               alt="Alien's Burger logo"
               className="nav-logo-image"
-              width={120}
-              height={120}
+              width={520}
+              height={290}
             />
           </Link>
           <div className="nav-right">
@@ -302,11 +302,11 @@ export default function Home() {
           </div>
 
           <Image
-            src="/images/logo-aliens-burger.png"
+            src="/images/logo-clean.png"
             alt="Alien's Burger"
             className="kebab-image-footer"
-            width={200}
-            height={200}
+            width={520}
+            height={290}
             loading="lazy"
           />
 
@@ -341,7 +341,8 @@ export default function Home() {
         <div className="incipit-div">
           <div className="incipit-inner">
             <p className="incipit-text">
-              ALIEN&apos;S BURGER — TOUS DROITS RÉSERVÉS. SITE CRÉÉ PAR{" "}
+              <Link href="/commander" className="incipit-brand-link">ALIEN&apos;S BURGER</Link>{" "}
+              — TOUS DROITS RÉSERVÉS. SITE CRÉÉ PAR{" "}
               <a href="https://www.instagram.com/lumea.fx?igsh=MTVpYjBveTQzdmEyaw==" className="incipit-link" target="_blank" rel="noopener noreferrer">LUMEA</a>
             </p>
             <div className="incipit-legal-links">

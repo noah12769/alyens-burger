@@ -1,0 +1,654 @@
+/* ===== /commander — page isolée (test), CSS non mêlée à globals.css ===== */
+
+.cmd-page {
+  position: relative;
+  background-color: #030402;
+  min-height: 100vh;
+  color: #f9f4e8;
+  padding-bottom: 60px;
+  background-image: url('/images/commander-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+.cmd-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%);
+  pointer-events: none;
+}
+
+.cmd-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cmd-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 32px 20px 110px;
+}
+
+@media screen and (min-width: 768px) {
+  .cmd-inner {
+    max-width: 1120px;
+    padding: 40px 24px 120px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .cmd-inner {
+    max-width: 1120px;
+    padding: 48px 40px 130px;
+  }
+}
+
+.cmd-back {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: #f9f4e8;
+  opacity: 0.7;
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.cmd-back:hover { opacity: 1; }
+
+.cmd-top-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+.cmd-top-actions .cmd-back {
+  margin-bottom: 0;
+}
+
+.cmd-message-preview {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(46, 125, 50, 0.4);
+  border-radius: 8px;
+  background: rgba(46, 125, 50, 0.08);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  white-space: pre-wrap;
+  color: rgba(249, 244, 232, 0.9);
+}
+
+.cmd-message-preview-label {
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #a5d6a7;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+/* ── En-tête : même gabarit + dégradé que la navbar de l'accueil,
+   avec un effet verre dépoli ("liquid glass") ── */
+.cmd-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: transparent;
+}
+
+.cmd-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.9) 80%, transparent 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.cmd-header-logo {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cmd-header-logo img {
+  height: 70px;
+  width: auto;
+}
+
+.cmd-cart-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(249, 244, 232, 0.3);
+  background: rgba(249, 244, 232, 0.06);
+  cursor: pointer;
+  color: #f9f4e8;
+}
+
+@media screen and (min-width: 768px) {
+  .cmd-header { padding: 14px 24px; }
+  .cmd-header-logo img { height: 100px; }
+}
+
+@media screen and (min-width: 992px) {
+  .cmd-header { padding: 16px 5.5%; }
+  .cmd-header-logo img { height: 130px; }
+  .cmd-cart-btn { width: 60px; height: 60px; }
+}
+
+.cmd-cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: #2e7d32;
+  color: #f9f4e8;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Grille produits : cartes carrées, 2 par ligne dès la tablette ── */
+.cmd-product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media screen and (min-width: 560px) {
+  .cmd-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .cmd-product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+.cmd-product-card {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  border: 1px solid rgba(249, 244, 232, 0.12);
+  border-radius: 12px;
+  background: rgba(249, 244, 232, 0.03);
+}
+
+.cmd-product-photo {
+  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  background: rgba(249, 244, 232, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.cmd-product-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cmd-product-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cmd-product-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+}
+
+.cmd-product-desc {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: rgba(249, 244, 232, 0.55);
+  margin-top: 2px;
+}
+
+.cmd-product-price {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #a5d6a7;
+  margin-top: 6px;
+}
+
+.cmd-product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.cmd-add-btn {
+  width: 100%;
+}
+
+/* Sur la page panier, on revient à une ligne compacte (photo miniature + infos) */
+.cmd-cart-list .cmd-product-grid {
+  grid-template-columns: 1fr;
+}
+
+.cmd-cart-list .cmd-product-card {
+  flex-direction: row;
+  gap: 14px;
+  align-items: center;
+}
+
+.cmd-cart-list .cmd-product-photo {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 0;
+}
+
+.cmd-cart-list .cmd-product-footer {
+  padding-top: 0;
+  margin-top: 4px;
+}
+
+.cmd-cart-list .cmd-add-btn {
+  width: auto;
+}
+
+.cmd-add-btn {
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  border: none;
+  cursor: pointer;
+  background: #2e7d32;
+  color: #f9f4e8;
+  white-space: nowrap;
+}
+.cmd-add-btn:hover { background: #276a2b; }
+
+/* ── Popup de confirmation ── */
+.cmd-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.cmd-popup {
+  width: 100%;
+  max-width: 380px;
+  background: #111;
+  border: 1px solid rgba(249, 244, 232, 0.15);
+  border-radius: 14px;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.cmd-popup-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.cmd-popup-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: rgba(249, 244, 232, 0.7);
+  margin-bottom: 24px;
+}
+
+.cmd-popup-btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cmd-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.cmd-sub {
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 13px;
+  color: rgba(249, 244, 232, 0.6);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.cmd-steps-indicator {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.cmd-steps-indicator span {
+  flex: 1;
+  height: 3px;
+  background: rgba(249, 244, 232, 0.2);
+  border-radius: 2px;
+}
+.cmd-steps-indicator span.is-active { background: #2e7d32; }
+
+.cmd-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #a5d6a7;
+  margin: 40px 0 20px;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 14px;
+}
+.cmd-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 3px;
+  background: #2e7d32;
+  border-radius: 2px;
+}
+.cmd-section-title:first-child { margin-top: 0; }
+
+@media screen and (min-width: 768px) {
+  .cmd-section-title { font-size: 42px; margin: 56px 0 28px; }
+}
+
+.cmd-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(249, 244, 232, 0.12);
+}
+
+.cmd-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cmd-item-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.cmd-item-desc {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: rgba(249, 244, 232, 0.55);
+  margin-top: 2px;
+}
+
+.cmd-item-price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: #a5d6a7;
+  margin-top: 2px;
+}
+
+.cmd-qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cmd-qty button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(249, 244, 232, 0.4);
+  background: transparent;
+  color: #f9f4e8;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cmd-qty button:disabled { opacity: 0.3; cursor: not-allowed; }
+.cmd-qty button:not(:disabled):hover { background: rgba(255,255,255,0.08); }
+
+.cmd-qty-value {
+  min-width: 18px;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+}
+
+.cmd-total-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+@media screen and (min-width: 992px) {
+  .cmd-total-bar {
+    padding: 18px 5.5%;
+  }
+}
+
+.cmd-total-label {
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: rgba(249, 244, 232, 0.7);
+}
+
+.cmd-total-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: #f9f4e8;
+}
+
+.cmd-btn {
+  border-radius: 6px;
+  padding: 16px 28px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.cmd-btn.is-primary { background: #2e7d32; color: #f9f4e8; }
+.cmd-btn.is-primary:disabled { background: rgba(46,125,50,0.35); cursor: not-allowed; }
+.cmd-btn.is-secondary { background: transparent; color: #f9f4e8; border: 1px solid rgba(249,244,232,0.4); }
+.cmd-btn.is-secondary:hover { background: rgba(255,255,255,0.08); }
+
+.cmd-btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.cmd-empty-note {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: rgba(249, 244, 232, 0.5);
+  margin-top: 4px;
+}
+
+.cmd-field {
+  margin-bottom: 20px;
+}
+
+.cmd-field label {
+  display: block;
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(249, 244, 232, 0.7);
+  margin-bottom: 8px;
+}
+
+.cmd-field input,
+.cmd-field textarea,
+.cmd-field select {
+  width: 100%;
+  background: rgba(249, 244, 232, 0.06);
+  border: 1px solid rgba(249, 244, 232, 0.25);
+  border-radius: 6px;
+  padding: 12px 14px;
+  color: #f9f4e8;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+}
+
+.cmd-field input:focus,
+.cmd-field textarea:focus,
+.cmd-field select:focus {
+  outline: none;
+  border-color: #2e7d32;
+}
+
+.cmd-field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.cmd-field-with-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media screen and (min-width: 560px) {
+  .cmd-field-with-btn {
+    flex-direction: row;
+  }
+  .cmd-field-with-btn input {
+    flex: 1;
+  }
+}
+
+.cmd-geo-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(249, 244, 232, 0.25);
+  background: rgba(249, 244, 232, 0.06);
+  color: #f9f4e8;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+.cmd-geo-btn:hover { background: rgba(249, 244, 232, 0.12); }
+.cmd-geo-btn:disabled { opacity: 0.5; cursor: wait; }
+
+.cmd-radio-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cmd-radio-option {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(249, 244, 232, 0.25);
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+}
+
+.cmd-radio-option.is-selected {
+  border-color: #2e7d32;
+  background: rgba(46, 125, 50, 0.25);
+}
+
+.cmd-error {
+  color: #ef9a9a;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.cmd-recap-block {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(249, 244, 232, 0.12);
+}
+
+.cmd-recap-label {
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #2e7d32;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.cmd-recap-value {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+}
+
+.cmd-recap-item-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  padding: 4px 0;
+}
