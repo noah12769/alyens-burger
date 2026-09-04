@@ -1,10 +1,127 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+// TODO: remplacer par le domaine final une fois le déploiement confirmé (cf. plan, Phase 9)
+const SITE_URL = "https://alyens-burger.example";
+
 export const metadata: Metadata = {
-  title: "ALIEN'S BURGER | Smash burgers & sandwiches généreux — Paris 13e",
+  metadataBase: new URL(SITE_URL),
+  title: "ALIEN'S BURGER | Burgers, wings & tenders livrés en Guadeloupe",
   description:
-    "Alien's Burger Paris 13e : Des bons burgers smashés, des sandwiches généreux et des frites croustillantes. Peu de choses, mais bien faites & toujours avec le sourire. Sur place, à emporter ou en livraison.",
+    "Alien's Burger en Guadeloupe : burgers, wings, tenders et desserts livrés tous les jours de 19h à 3h à Pointe-à-Pitre, Gosier, Abymes, Baie-Mahault, Petit-Bourg et Lamentin. Commande uniquement sur WhatsApp.",
+  openGraph: {
+    title: "ALIEN'S BURGER | Burgers, wings & tenders livrés en Guadeloupe",
+    description:
+      "Burgers, wings, tenders et desserts livrés tous les jours de 19h à 3h en Guadeloupe. Commande uniquement sur WhatsApp.",
+    url: SITE_URL,
+    siteName: "Alien's Burger",
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: "/images/hf_20260516_182739_108f80dc-a6b0-4aa1-8aa4-d0fa64b43768.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ALIEN'S BURGER | Burgers, wings & tenders livrés en Guadeloupe",
+    description:
+      "Burgers, wings, tenders et desserts livrés tous les jours de 19h à 3h en Guadeloupe. Commande uniquement sur WhatsApp.",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FoodEstablishment",
+      "@id": `${SITE_URL}/#restaurant`,
+      name: "Alien's Burger",
+      image: `${SITE_URL}/images/logo-aliens-burger.png`,
+      url: SITE_URL,
+      telephone: "+590690722870",
+      servesCuisine: ["Burgers", "Fast food", "Américain"],
+      priceRange: "€€",
+      areaServed: [
+        "Pointe-à-Pitre",
+        "Gosier",
+        "Abymes",
+        "Baie-Mahault",
+        "Petit-Bourg",
+        "Lamentin",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressRegion: "Guadeloupe",
+        addressCountry: "GP",
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "19:00",
+          closes: "03:00",
+        },
+      ],
+      acceptsReservations: "False",
+      paymentAccepted: "Espèces, Carte bancaire, SumUp",
+      sameAs: [
+        "https://www.instagram.com/alyens_burger",
+        "https://www.tiktok.com/@alyens_burger",
+      ],
+      hasMenu: `${SITE_URL}/menu`,
+      potentialAction: {
+        "@type": "OrderAction",
+        target: "https://api.whatsapp.com/message/2NJV3INJIUY4P1?autoload=1&app_absent=0",
+        deliveryMethod: "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet",
+      },
+    },
+    {
+      "@type": "HowTo",
+      "@id": `${SITE_URL}/#comment-commander`,
+      name: "Comment commander chez Alien's Burger",
+      description:
+        "La démarche à suivre pour passer commande chez Alien's Burger, uniquement via WhatsApp.",
+      step: [
+        { "@type": "HowToStep", position: 1, name: "Nom", text: "Indiquez votre nom." },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Numéro de téléphone",
+          text: "Indiquez votre numéro de téléphone.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Commune de livraison + localisation",
+          text: "Indiquez votre commune de livraison et votre localisation précise.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Menu",
+          text: "Indiquez votre menu, avec sauce, supplément, boisson et dessert.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 5,
+          name: "Mode de paiement",
+          text: "Indiquez votre mode de paiement : espèces, carte bancaire ou lien SumUp.",
+        },
+      ],
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -14,7 +131,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

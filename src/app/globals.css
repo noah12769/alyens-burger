@@ -30,6 +30,12 @@
   --red: #7e0000;
   --marquee-red: #2e7d32;
   --whiter: white;
+
+  /* Container standard partagé par header / à propos / infos / footer */
+  --container-max: 1200px;
+  --container-pad: 40px;
+  --container-pad-tablet: 24px;
+  --container-pad-mobile: 20px;
 }
 
 *,
@@ -78,60 +84,34 @@ a {
 }
 
 .header-inner {
-  max-width: 1320px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 var(--container-pad);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
+/* ── Desktop : logo/bouton calés sur la même largeur que la galerie
+   d'images de la section À propos (1758px = largeur naturelle de la
+   galerie, mesurée), centrés pareil donc mêmes bords qu'elle partout ── */
+@media screen and (min-width: 992px) {
+  .header-inner {
+    max-width: 1758px;
+    padding: 0;
+  }
+}
+
 .nav-logo-image {
-  width: 120px;
-  height: 120px;
-  max-width: 120px;
+  width: 167px;
+  height: 167px;
+  max-width: 167px;
   object-fit: contain;
 }
 
 .nav-logo-link {
   margin-right: 60px;
-}
-
-.menu-wrapper {
-  display: flex;
-  flex-direction: row;
-  gap: 32px;
-  align-items: center;
-}
-
-.nav-link {
-  color: #fff;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 120%;
-  text-decoration: none;
-  cursor: pointer;
-  position: relative;
-  padding-bottom: 2px;
-  overflow: hidden;
-  display: block;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  height: 1px;
-  background-color: #fff;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-  width: 100%;
 }
 
 .nav-right {
@@ -348,6 +328,30 @@ a {
   padding-top: 40px;
 }
 
+/* ── Desktop : les 2 boutons partent chacun de la bordure de colonne 6/7,
+   même padding (la gouttière) de part et d'autre de l'axe central ── */
+@media screen and (min-width: 992px) {
+  .hero-buttons {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    width: 100%;
+    max-width: var(--container-max);
+    padding: 40px var(--container-pad) 0;
+    box-sizing: border-box;
+  }
+
+  .hero-buttons > a:nth-child(1) {
+    grid-column: 5 / 7;
+    justify-self: end;
+  }
+
+  .hero-buttons > a:nth-child(2) {
+    grid-column: 7 / 9;
+    justify-self: start;
+  }
+}
+
 .background-video {
   position: absolute;
   inset: 0;
@@ -415,10 +419,49 @@ a {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 60px 40px 0;
-  gap: 20px;
+  padding: 60px var(--container-pad) 0;
+  gap: 36px;
+}
+
+/* ── Desktop : calé sur la grille 12 colonnes (gouttière 24px) ──
+   À PROPOS = 2 colonnes (1-2) · texte centré = 6 colonnes (4-9, symétrique
+   par rapport à l'axe central) · VOYAGER = 2 colonnes (11-12) ── */
+@media screen and (min-width: 992px) {
+  .text-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 24px;
+    row-gap: 64px;
+  }
+
+  .heading.is-1 {
+    grid-column: 1 / 3;
+    font-size: 60px;
+    align-self: center;
+  }
+
+  .text-container .concept-text {
+    grid-column: 4 / 10;
+    width: 450px;
+    max-width: 100%;
+    justify-self: center;
+  }
+
+  .text-container .white-button {
+    grid-column: 11 / 13;
+    justify-self: end;
+    padding: 24px 58px;
+  }
+
+  .heading.is-brand {
+    grid-column: 1 / -1;
+  }
+
+  .nav-right .white-button {
+    padding: 21px 31px;
+  }
 }
 
 .heading {
@@ -433,7 +476,7 @@ a {
 }
 
 .heading.is-1 {
-  margin-left: -30px;
+  margin-left: 0;
 }
 
 .heading.is-2 {
@@ -492,6 +535,7 @@ a {
 
 .image-type-2 {
   border-radius: 120px;
+  width: auto;
   height: 500px;
   flex-shrink: 0;
   object-fit: cover;
@@ -619,11 +663,11 @@ a {
   position: relative;
   z-index: 1;
   background-color: var(--black);
-  padding: 80px 40px;
+  padding: 80px var(--container-pad);
 }
 
 .location-inner {
-  max-width: 1100px;
+  max-width: var(--container-max);
   margin: 0 auto;
   display: flex;
   gap: 70px;
@@ -665,7 +709,7 @@ a {
 .location-label {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 13px;
-  color: #2e7d32;
+  color: #4caf50;
   letter-spacing: 3px;
   text-transform: uppercase;
 }
@@ -764,18 +808,31 @@ nextjs-portal { display: none !important; }
   justify-content: space-around;
   align-items: center;
   min-height: 50vh;
-  padding: 40px 0;
+  padding: 40px 0 80px;
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
-  justify-content: space-around;
+  gap: 64px;
   align-items: center;
-  place-items: center stretch;
   width: 100%;
-  max-width: 900px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  box-sizing: border-box;
+}
+
+.left-footer {
+  justify-self: start;
+}
+
+.kebab-image-footer {
+  justify-self: center;
+}
+
+.right-footer {
+  justify-self: end;
 }
 
 .footer-logo-center {
@@ -793,12 +850,14 @@ nextjs-portal { display: none !important; }
 
 .kebab-image-footer {
   width: 250px;
+  height: auto;
 }
 
 .left-footer,
 .right-footer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 30px;
 }
 
@@ -820,7 +879,8 @@ nextjs-portal { display: none !important; }
 .footer-social {
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: 2px;
 }
 
 .footer-social-icon {
@@ -862,7 +922,39 @@ nextjs-portal { display: none !important; }
   right: 0;
   display: flex;
   justify-content: center;
+}
+
+.incipit-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.incipit-legal-links {
+  display: flex;
+  gap: 20px;
+}
+
+.incipit-legal-link {
+  color: var(--whiter);
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 200;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.incipit-legal-link:hover {
+  opacity: 1;
 }
 
 .incipit-text {
@@ -872,6 +964,7 @@ nextjs-portal { display: none !important; }
   font-weight: 200;
   letter-spacing: 0.4px;
   text-decoration: none;
+  text-align: right;
 }
 
 .incipit-link {
@@ -1151,7 +1244,7 @@ nextjs-portal { display: none !important; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  gap: 24px;
   width: 100%;
   max-width: 900px;
   padding: 0 20px;
@@ -1161,16 +1254,154 @@ nextjs-portal { display: none !important; }
   width: 100%;
 }
 
+.menu-image-wrapper.is-small {
+  max-width: 320px;
+}
+
+@media screen and (max-width: 479px) {
+  .menu-image-wrapper.is-small {
+    max-width: 200px;
+  }
+}
+
 .menu-image {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 12px;
 }
 
 .menu-order-cta {
   margin-top: 48px;
   display: flex;
   justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 0 var(--container-pad-mobile);
+}
+
+/* ===== ORDERING STEPS (page /menu) ===== */
+.order-steps {
+  width: 100%;
+  max-width: 900px;
+  padding: 0 var(--container-pad-mobile) 32px;
+}
+
+.order-steps-title {
+  color: var(--beige);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.order-steps-sub {
+  color: rgba(249, 244, 232, 0.65);
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.order-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.order-step {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border-left: 2px solid #2e7d32;
+  padding-left: 16px;
+}
+
+.order-step-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: #2e7d32;
+  flex-shrink: 0;
+}
+
+.order-step-label {
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--beige);
+  text-transform: uppercase;
+}
+
+/* ===== PAGES LÉGALES ===== */
+.legal-page {
+  background-color: var(--black);
+  min-height: 100vh;
+  color: var(--beige);
+}
+
+.legal-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 140px var(--container-pad-mobile) 100px;
+}
+
+.legal-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  color: var(--beige);
+}
+
+.legal-section {
+  margin-bottom: 28px;
+}
+
+.legal-section h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: #2e7d32;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.legal-section p,
+.legal-section li {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(249, 244, 232, 0.85);
+}
+
+.legal-section ul {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.legal-section a {
+  color: #a5d6a7;
+  text-decoration: underline;
+}
+
+.legal-todo {
+  color: #ffb74d;
+  font-weight: 600;
+}
+
+.legal-back {
+  display: inline-block;
+  margin-bottom: 32px;
+  color: var(--beige);
+  opacity: 0.7;
+  font-family: 'Gt Pressura Mono', Arial, sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.legal-back:hover {
+  opacity: 1;
 }
 
 /* ===== DESKTOP FAN-OUT ANIMATION ===== */
@@ -1198,7 +1429,7 @@ nextjs-portal { display: none !important; }
 /* ===== RESPONSIVE ===== */
 @media screen and (max-width: 991px) {
   .header-inner {
-    padding: 0 20px;
+    padding: 0 var(--container-pad-tablet);
   }
 
   .nav-button-text {
@@ -1216,14 +1447,6 @@ nextjs-portal { display: none !important; }
     max-width: 80px;
   }
 
-  .menu-wrapper {
-    gap: 20px;
-  }
-
-  .nav-link {
-    font-size: 16px;
-  }
-
   .nav-right .white-button {
     padding: 14px 22px;
   }
@@ -1234,6 +1457,16 @@ nextjs-portal { display: none !important; }
 
   .heading.is-2 {
     font-size: 64px;
+  }
+
+  /* ── À propos : centré dès que ça passe à la ligne (iPad / tablette) ── */
+  .text-container {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .heading.is-1 {
+    text-align: center;
   }
 
   .concept-text {
@@ -1252,11 +1485,19 @@ nextjs-portal { display: none !important; }
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 20px;
+    gap: 40px;
+  }
+
+  /* ── Footer : centré dès que les 3 blocs s'empilent (iPad / tablette) ── */
+  .left-footer,
+  .right-footer,
+  .kebab-image-footer {
+    justify-self: center;
   }
 
   .kebab-image-footer {
-    display: none;
+    width: 160px;
+    height: auto;
   }
 
   .sticker-eat-burger {
@@ -1288,7 +1529,7 @@ nextjs-portal { display: none !important; }
   .text-container {
     flex-direction: column;
     align-items: flex-start;
-    padding: 40px 20px 0;
+    padding: 40px var(--container-pad-mobile) 0;
   }
 
   .horizontal-track {
@@ -1314,13 +1555,12 @@ nextjs-portal { display: none !important; }
 /* ===== MOBILE ≤767px ===== */
 @media screen and (max-width: 767px) {
 
-  /* ── Navbar mobile : grid 3 colonnes pour que logo / liens (centrés) / bouton tiennent sur une ligne ── */
+  /* ── Navbar mobile : logo à gauche, bouton à droite ── */
   .header-inner {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    column-gap: 4px;
-    padding: 0 6px;
+    padding: 0 var(--container-pad-mobile);
   }
 
   .nav-logo-link {
@@ -1328,20 +1568,9 @@ nextjs-portal { display: none !important; }
   }
 
   .nav-logo-image {
-    width: 70px;
-    height: 70px;
-    max-width: 70px;
-  }
-
-  .menu-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .nav-link {
-    font-size: 17px;
-    white-space: nowrap;
+    width: 92px;
+    height: 92px;
+    max-width: 92px;
   }
 
   .nav-right {
@@ -1350,17 +1579,17 @@ nextjs-portal { display: none !important; }
   }
 
   .nav-right .white-button {
-    padding: 9px 10px;
-    border-radius: 5px;
+    padding: 13px 18px;
+    border-radius: 6px;
   }
 
   .nav-right .white-button .button-text-wrap {
-    height: 14px;
+    height: 16px;
   }
 
   .nav-right .white-button .btn-front,
   .nav-right .white-button .btn-hidden {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 0.01em;
     white-space: nowrap;
   }
@@ -1456,7 +1685,7 @@ nextjs-portal { display: none !important; }
 
   /* ── Section livraison / adresse ── */
   .section-location {
-    padding: 48px 24px;
+    padding: 48px var(--container-pad-mobile);
     display: flex;
     justify-content: center;
   }
@@ -1505,7 +1734,10 @@ nextjs-portal { display: none !important; }
     margin-top: 18px;
   }
 
-  /* ── Footer : centré ── */
+  /* ── Footer : centré, espacement entre blocs plus généreux sur mobile ── */
+  .footer-grid {
+    gap: 56px;
+  }
   .left-footer,
   .right-footer {
     align-items: center;
@@ -1513,4 +1745,17 @@ nextjs-portal { display: none !important; }
   }
   .footer-social { justify-content: center; }
   .footer-social-div { align-items: center; }
+
+  .incipit-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  .incipit-legal-links {
+    order: 2;
+  }
+  .incipit-text {
+    text-align: center;
+    order: 1;
+  }
 }

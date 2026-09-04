@@ -1,0 +1,42 @@
+# Alien's Burger
+
+> Restaurant de burgers, wings, tenders et desserts en livraison, basé en Guadeloupe. Commande uniquement via WhatsApp.
+
+Alien's Burger propose des burgers, ailes de poulet (wings), tenders, hot-dogs et desserts, livrés tous les jours de 19h00 à 3h00 (précommandes ouvertes dès 17h00).
+
+## Zones de livraison
+
+- Zone 1 (Baie-Mahault, Pointe-à-Pitre) — 4€
+- Zone 2 (Abymes, Lamentin, Gosier, Petit-Bourg) — 6€
+- Multivers (hors zones 1 et 2, minimum 50€ de panier) — 10€
+
+## Menu
+
+Menus (frites + boisson incluses) :
+- Menu Wings — 12€
+- Menu Wings BBQ — 14€
+- Menu Tenders — 12€
+- Menu Chicken Ball — 16€
+
+À la carte (part de 5, sauf mention contraire) :
+- Tenders — 6,50€
+- Wings BBQ — 8€
+- Hot-Dog (saucisse de poulet) — 6,50€
+- Wings — 6,50€
+- Dessert (fondant chocolat, salade de fruits ou glace) — 6€
+
+## Comment commander
+
+Les commandes se font uniquement sur WhatsApp (+590 690 72 28 70), avec 5 informations : nom, numéro de téléphone, commune de livraison + localisation, détail du menu (sauce, supplément, boisson, dessert), mode de paiement (espèces, carte bancaire ou lien SumUp).
+
+## Pages
+
+- [Accueil](/): présentation, concept, zones de livraison, horaires
+- [Menu](/menu): menu complet et démarche de commande
+- [Mentions légales](/mentions-legales)
+- [Politique de confidentialité](/confidentialite)
+
+## Réseaux sociaux
+
+- Instagram : [@alyens_burger](https://www.instagram.com/alyens_burger)
+- TikTok : [@alyens_burger](https://www.tiktok.com/@alyens_burger)

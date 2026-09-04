@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
 export default function Home() {
@@ -82,7 +83,7 @@ export default function Home() {
       {/* HEADER */}
       <header className="header">
         <div className="header-inner">
-          <a href="/" className="nav-logo-link">
+          <Link href="/" className="nav-logo-link">
             <Image
               src="/images/logo-aliens-burger.png"
               alt="Alien's Burger logo"
@@ -90,11 +91,7 @@ export default function Home() {
               width={120}
               height={120}
             />
-          </a>
-          <nav className="menu-wrapper">
-            <a href="#CONCEPT" className="nav-link">CONCEPT</a>
-            <a href="/menu" className="nav-link">MENU</a>
-          </nav>
+          </Link>
           <div className="nav-right">
             <a
               href="https://api.whatsapp.com/message/2NJV3INJIUY4P1?autoload=1&app_absent=0"
@@ -111,6 +108,7 @@ export default function Home() {
         </div>
       </header>
 
+      <main>
       {/* HERO SECTION */}
       <section className="section-hero">
         <div className="background-video">
@@ -121,6 +119,7 @@ export default function Home() {
             autoPlay
             muted
             playsInline
+            aria-hidden="true"
             onEnded={handleVideoEnded}
             style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
           >
@@ -164,7 +163,7 @@ export default function Home() {
           <div className="text-container">
             <h1 className="heading is-1">À PROPOS</h1>
             <div className="concept-text">
-              Chez Alien&apos;s Burger, on ne fait pas de simples burgers. Nos recettes viennent d&apos;un autre univers. Chaque création est pensée comme une expérience : fermée, surprenante, et conçue pour exploser en saveurs dès la première bouchée. Ici, on ne mange pas un burger… on découvre un autre monde.
+              Chez Alien&apos;s Burger,{" "}on{" "}ne fait pas de simples burgers. Nos recettes viennent d&apos;un{" "}autre univers. Chaque création{" "}est pensée comme une expérience{" "}: fermée, surprenante,{" "}et{" "}conçue pour exploser en saveurs dès la première bouchée. Ici, on{" "}ne mange pas un burger…{" "}on{" "}découvre un{" "}autre{" "}monde.
             </div>
             <a
               href="https://api.whatsapp.com/message/2NJV3INJIUY4P1?autoload=1&app_absent=0"
@@ -181,11 +180,11 @@ export default function Home() {
           </div>
 
           <div className="horizontal-track" ref={galleryRef}>
-            <img src="/images/IMG_9944.jpg" alt="" className="image-type-1" />
-            <img src="/images/IMG_9938.jpg" alt="" className="image-type-2" />
-            <img src="/images/IMG_9945.jpg" alt="" className="image-type-1 is-2" />
-            <img src="/images/IMG_9941.jpg" alt="" className="image-type-2" />
-            <img src="/images/IMG_9939.jpg" alt="" className="image-type-1" />
+            <Image src="/images/IMG_9944.jpg" alt="Burger Alien's Burger 1" width={899} height={1653} className="image-type-1" />
+            <Image src="/images/IMG_9938.jpg" alt="Burger Alien's Burger 2" width={1282} height={1700} className="image-type-2" />
+            <Image src="/images/IMG_9945.jpg" alt="Burger Alien's Burger 3" width={1282} height={1700} className="image-type-1 is-2" />
+            <Image src="/images/IMG_9941.jpg" alt="Burger Alien's Burger 4" width={971} height={1346} className="image-type-2" />
+            <Image src="/images/IMG_9939.jpg" alt="Burger Alien's Burger 5" width={957} height={1302} className="image-type-1" />
           </div>
         </div>
       </section>
@@ -197,7 +196,13 @@ export default function Home() {
       <section className="section-location">
         <div className="location-inner">
           <div className="location-photo">
-            <img src="/images/1.jpg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <Image
+              src="/images/1.jpg"
+              alt="Alien's Burger — livraison en Guadeloupe"
+              width={906}
+              height={1588}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
           </div>
           <div className="location-info-col">
             <h2 className="location-brand">ALYEN&apos;S BURGER</h2>
@@ -211,6 +216,12 @@ export default function Home() {
               <span className="location-label">Zones de livraison</span>
               <span className="location-value">P-A-P · Gosier · Abymes</span>
               <span className="location-value">Baie-Mahault · Petit-Bourg · Lamentin</span>
+            </div>
+            <div className="location-block">
+              <span className="location-label">Tarifs de livraison</span>
+              <span className="location-value">Zone 1 (Baie-Mahault · P-A-P) — 4€</span>
+              <span className="location-value">Zone 2 (Abymes · Lamentin · Gosier · Petit-Bourg) — 6€</span>
+              <span className="location-sub">Multivers (hors zone) — 10€, minimum 50€ de panier</span>
             </div>
             <div className="location-block">
               <span className="location-label">Moyen de paiement</span>
@@ -263,6 +274,7 @@ export default function Home() {
           </a>
         </div>
       </section>
+      </main>
 
       {/* FOOTER */}
       <footer className="section-footer">
@@ -302,7 +314,7 @@ export default function Home() {
             <h2 className="eyebrow-frunch">Contact</h2>
             <div className="footer-social-div">
               <div className="footer-social">
-                <a href="https://api.whatsapp.com/message/2NJV3INJIUY4P1?autoload=1&app_absent=0" className="footer-social-icon" target="_blank" rel="noopener noreferrer">
+                <a href="https://api.whatsapp.com/message/2NJV3INJIUY4P1?autoload=1&app_absent=0" className="footer-social-icon" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                   <svg viewBox="0 0 24 24" fill="#25D366" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
                     <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.121 1.524 5.855L.057 23.903l6.201-1.43A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.865 9.865 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374A9.867 9.867 0 012.1 12C2.1 6.534 6.534 2.1 12 2.1c5.467 0 9.9 4.434 9.9 9.9 0 5.467-4.433 9.9-9.9 9.9z"/>
@@ -312,15 +324,31 @@ export default function Home() {
                   WHATSAPP
                 </a>
               </div>
+              <div className="footer-social">
+                <a href="tel:+590690722870" className="footer-social-icon" aria-label="Téléphone">
+                  <svg viewBox="0 0 24 24" fill="#f9f4e8" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z" />
+                  </svg>
+                </a>
+                <a href="tel:+590690722870" className="footer-text">
+                  06 90 72 28 70
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="incipit-div">
-          <p className="incipit-text">
-            ALIEN&apos;S BURGER — TOUS DROITS RÉSERVÉS. SITE CRÉÉ PAR{" "}
-            <a href="https://www.instagram.com/lumea.fx?igsh=MTVpYjBveTQzdmEyaw==" className="incipit-link" target="_blank" rel="noopener noreferrer">LUMEA</a>
-          </p>
+          <div className="incipit-inner">
+            <p className="incipit-text">
+              ALIEN&apos;S BURGER — TOUS DROITS RÉSERVÉS. SITE CRÉÉ PAR{" "}
+              <a href="https://www.instagram.com/lumea.fx?igsh=MTVpYjBveTQzdmEyaw==" className="incipit-link" target="_blank" rel="noopener noreferrer">LUMEA</a>
+            </p>
+            <div className="incipit-legal-links">
+              <a href="/mentions-legales" className="incipit-legal-link">Mentions légales</a>
+              <a href="/confidentialite" className="incipit-legal-link">Confidentialité</a>
+            </div>
+          </div>
         </div>
       </footer>
 
@@ -355,6 +383,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+
     </>
   );
 }
