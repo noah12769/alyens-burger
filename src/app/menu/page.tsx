@@ -48,10 +48,10 @@ const menuJsonLd = {
 };
 
 const MENU_IMAGES = [
-  { src: "/images/menu-alien-visual.jpg", width: 853, height: 1280, alt: "Alien's Burger", small: true },
-  { src: "/images/menu-combo.jpg", width: 1254, height: 1254, alt: "Menus Alien's Burger : Wings, Wings BBQ, Tenders, Chicken Ball avec frites et boisson" },
-  { src: "/images/menu-carte.jpg", width: 1536, height: 1024, alt: "Menu à la carte Alien's Burger : tenders, wings, hot-dog, dessert" },
-  { src: "/images/menu-zones-livraison.jpg", width: 1280, height: 853, alt: "Zones de livraison et tarifs Alien's Burger" },
+  { src: "/images/menu/alien-visual.jpg", width: 853, height: 1280, alt: "Alien's Burger", small: true },
+  { src: "/images/menu/combo.jpg", width: 1254, height: 1254, alt: "Menus Alien's Burger : Wings, Wings BBQ, Tenders, Chicken Ball avec frites et boisson" },
+  { src: "/images/menu/a-la-carte.jpg", width: 1536, height: 1024, alt: "Menu à la carte Alien's Burger : tenders, wings, hot-dog, dessert" },
+  { src: "/images/menu/zones-livraison.jpg", width: 1280, height: 853, alt: "Zones de livraison et tarifs Alien's Burger" },
 ];
 
 const ORDER_STEPS = [
@@ -72,7 +72,7 @@ export default function MenuPage() {
       <header className="menu-header">
         <Link href="/">
           <Image
-            src="/images/logo-clean.png"
+            src="/images/branding/logo.png"
             alt="Alien's Burger logo"
             className="menu-page-logo"
             width={520}

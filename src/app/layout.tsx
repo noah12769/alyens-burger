@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Polices auto-hébergées par Next (next/font) : téléchargées au build et
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/hf_20260516_182739_108f80dc-a6b0-4aa1-8aa4-d0fa64b43768.jpg",
+        url: "/images/sections/cta-bg.jpg",
         width: 1200,
         height: 630,
       },
@@ -59,7 +60,7 @@ const jsonLd = {
       "@type": "FoodEstablishment",
       "@id": `${SITE_URL}/#restaurant`,
       name: "Alien's Burger",
-      image: `${SITE_URL}/images/logo-aliens-burger.png`,
+      image: `${SITE_URL}/images/branding/logo-pattern.png`,
       url: SITE_URL,
       telephone: "+590690722870",
       servesCuisine: ["Burgers", "Fast food", "Américain"],
@@ -156,6 +157,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        {/* Vercel Web Analytics — gratuit jusqu'à 50 000 visites/mois, sert
+            son propre script/API depuis ce même domaine (pas un domaine
+            tiers), donc rien à ajouter à la Content-Security-Policy. */}
+        <Analytics />
       </body>
     </html>
   );

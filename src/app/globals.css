@@ -660,7 +660,7 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/images/logo-aliens-burger.png');
+  background-image: url('/images/branding/logo-pattern.png');
   background-repeat: repeat;
   background-size: 150px auto;
   background-position: center;
@@ -755,7 +755,7 @@ a {
   position: relative;
   z-index: 3;
   background-color: #2e7d32;
-  background-image: url('/images/hf_20260516_182739_108f80dc-a6b0-4aa1-8aa4-d0fa64b43768.jpg');
+  background-image: url('/images/sections/cta-bg.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;

@@ -177,7 +177,7 @@ export default function CommanderClient() {
       {/* EN-TÊTE */}
       <header className="cmd-header">
         <button className="cmd-header-logo" onClick={() => setStep("products")} aria-label="Accueil du menu">
-          <Image src="/images/logo-clean.png" alt="Alien's Burger" width={520} height={290} />
+          <Image src="/images/branding/logo.png" alt="Alien's Burger" width={520} height={290} />
         </button>
         <button className="cmd-cart-btn" onClick={() => setStep("cart")} aria-label="Voir le panier">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">

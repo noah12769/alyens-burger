@@ -85,7 +85,7 @@ export default function Home() {
         <div className="header-inner">
           <Link href="/" className="nav-logo-link">
             <Image
-              src="/images/logo-clean.png"
+              src="/images/branding/logo.png"
               alt="Alien's Burger logo"
               className="nav-logo-image"
               width={520}
@@ -181,11 +181,11 @@ export default function Home() {
               sans ce indice, next/image supposait 100vw et servait la version
               3840px la plus lourde même sur des écrans où l'image fait 300px. */}
           <div className="horizontal-track" ref={galleryRef}>
-            <Image src="/images/IMG_9944.jpg" alt="Burger Alien's Burger 1" width={899} height={1653} sizes="500px" className="image-type-1" />
-            <Image src="/images/IMG_9938.jpg" alt="Burger Alien's Burger 2" width={1282} height={1700} sizes="500px" className="image-type-2" />
-            <Image src="/images/IMG_9945.jpg" alt="Burger Alien's Burger 3" width={1282} height={1700} sizes="500px" className="image-type-1 is-2" />
-            <Image src="/images/IMG_9941.jpg" alt="Burger Alien's Burger 4" width={971} height={1346} sizes="500px" className="image-type-2" />
-            <Image src="/images/IMG_9939.jpg" alt="Burger Alien's Burger 5" width={957} height={1302} sizes="500px" className="image-type-1" />
+            <Image src="/images/gallery/burger-1.jpg" alt="Burger Alien's Burger 1" width={899} height={1653} sizes="500px" className="image-type-1" />
+            <Image src="/images/gallery/burger-2.jpg" alt="Burger Alien's Burger 2" width={1282} height={1700} sizes="500px" className="image-type-2" />
+            <Image src="/images/gallery/burger-3.jpg" alt="Burger Alien's Burger 3" width={1282} height={1700} sizes="500px" className="image-type-1 is-2" />
+            <Image src="/images/gallery/burger-4.jpg" alt="Burger Alien's Burger 4" width={971} height={1346} sizes="500px" className="image-type-2" />
+            <Image src="/images/gallery/burger-5.jpg" alt="Burger Alien's Burger 5" width={957} height={1302} sizes="500px" className="image-type-1" />
           </div>
         </div>
       </section>
@@ -198,7 +198,7 @@ export default function Home() {
         <div className="location-inner">
           <div className="location-photo">
             <Image
-              src="/images/1.jpg"
+              src="/images/sections/delivery-photo.jpg"
               alt="Alien's Burger — livraison en Guadeloupe"
               width={906}
               height={1588}
@@ -286,7 +286,7 @@ export default function Home() {
             <div className="footer-social-div">
               <div className="footer-social">
                 <a href="https://www.instagram.com/alyens_burger" className="footer-social-icon" target="_blank" rel="noopener noreferrer">
-                  <Image src="/images/Instagram.svg" alt="Instagram" width={30} height={30} loading="lazy" />
+                  <Image src="/images/icons/instagram.svg" alt="Instagram" width={30} height={30} loading="lazy" />
                 </a>
                 <a href="https://www.instagram.com/alyens_burger" className="footer-text" target="_blank" rel="noopener noreferrer">
                   ALYENS_BURGER
@@ -294,7 +294,7 @@ export default function Home() {
               </div>
               <div className="footer-social">
                 <a href="https://www.tiktok.com/@alyens_burger" className="footer-social-icon" target="_blank" rel="noopener noreferrer">
-                  <Image src="/images/tiktok.svg" alt="TikTok" width={30} height={30} loading="lazy" />
+                  <Image src="/images/icons/tiktok.svg" alt="TikTok" width={30} height={30} loading="lazy" />
                 </a>
                 <a href="https://www.tiktok.com/@alyens_burger" className="footer-text" target="_blank" rel="noopener noreferrer">
                   ALYENS_BURGER
@@ -304,7 +304,7 @@ export default function Home() {
           </div>
 
           <Image
-            src="/images/logo-clean.png"
+            src="/images/branding/logo.png"
             alt="Alien's Burger"
             className="kebab-image-footer"
             width={520}
