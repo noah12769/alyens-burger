@@ -76,7 +76,7 @@
   border: 1px solid rgba(46, 125, 50, 0.4);
   border-radius: 8px;
   background: rgba(46, 125, 50, 0.08);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 13px;
   white-space: pre-wrap;
   color: rgba(249, 244, 232, 0.9);
@@ -162,7 +162,7 @@
   border-radius: 10px;
   background: #2e7d32;
   color: #f9f4e8;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -225,20 +225,20 @@
 }
 
 .cmd-product-name {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 20px;
   letter-spacing: 0.02em;
 }
 
 .cmd-product-desc {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 12px;
   color: rgba(249, 244, 232, 0.55);
   margin-top: 2px;
 }
 
 .cmd-product-price {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-weight: 700;
   font-size: 14px;
   color: #a5d6a7;
@@ -287,7 +287,7 @@
 .cmd-add-btn {
   border-radius: 6px;
   padding: 8px 14px;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 13px;
   letter-spacing: 0.02em;
   border: none;
@@ -321,13 +321,13 @@
 }
 
 .cmd-popup-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 24px;
   margin-bottom: 10px;
 }
 
 .cmd-popup-text {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 14px;
   color: rgba(249, 244, 232, 0.7);
   margin-bottom: 24px;
@@ -340,19 +340,12 @@
 }
 
 .cmd-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 40px;
   text-transform: uppercase;
   margin-bottom: 6px;
 }
 
-.cmd-sub {
-  font-family: 'Gt Pressura Mono', Arial, sans-serif;
-  font-size: 13px;
-  color: rgba(249, 244, 232, 0.6);
-  text-transform: uppercase;
-  margin-bottom: 28px;
-}
 
 .cmd-steps-indicator {
   display: flex;
@@ -368,7 +361,7 @@
 .cmd-steps-indicator span.is-active { background: #2e7d32; }
 
 .cmd-section-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 34px;
   text-align: center;
   text-transform: uppercase;
@@ -410,20 +403,20 @@
 }
 
 .cmd-item-name {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-weight: 700;
   font-size: 15px;
 }
 
 .cmd-item-desc {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 12px;
   color: rgba(249, 244, 232, 0.55);
   margin-top: 2px;
 }
 
 .cmd-item-price {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 13px;
   color: #a5d6a7;
   margin-top: 2px;
@@ -456,7 +449,7 @@
 .cmd-qty-value {
   min-width: 18px;
   text-align: center;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-weight: 700;
 }
 
@@ -489,7 +482,7 @@
 }
 
 .cmd-total-value {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 28px;
   color: #f9f4e8;
 }
@@ -497,7 +490,7 @@
 .cmd-btn {
   border-radius: 6px;
   padding: 16px 28px;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-bebas), sans-serif;
   font-size: 17px;
   letter-spacing: 0.02em;
   border: none;
@@ -520,7 +513,7 @@
 }
 
 .cmd-empty-note {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 13px;
   color: rgba(249, 244, 232, 0.5);
   margin-top: 4px;
@@ -549,7 +542,7 @@
   border-radius: 6px;
   padding: 12px 14px;
   color: #f9f4e8;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 15px;
 }
 
@@ -566,7 +559,7 @@
 }
 
 .cmd-field-hint {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 12px;
   color: rgba(249, 244, 232, 0.5);
   margin: -4px 0 8px;
@@ -595,7 +588,7 @@
 .cmd-suggestions li {
   padding: 10px 12px;
   border-radius: 6px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 14px;
   color: #f9f4e8;
   cursor: pointer;
@@ -616,7 +609,7 @@
   border-radius: 6px;
   border: 1px solid rgba(249, 244, 232, 0.25);
   cursor: pointer;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 14px;
 }
 
@@ -627,7 +620,7 @@
 
 .cmd-error {
   color: #ef9a9a;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 13px;
   margin-top: 4px;
 }
@@ -648,14 +641,14 @@
 }
 
 .cmd-recap-value {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 15px;
 }
 
 .cmd-recap-item-row {
   display: flex;
   justify-content: space-between;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 14px;
   padding: 4px 0;
 }

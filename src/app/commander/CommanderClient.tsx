@@ -190,8 +190,6 @@ export default function CommanderClient() {
       </header>
 
       <div className="cmd-inner">
-        <p className="cmd-sub">Sélectionnez vos articles, remplissez vos informations, puis validez votre commande directement sur WhatsApp</p>
-
         {step === "products" && (
           <>
             {CATEGORIES.map((cat) => {

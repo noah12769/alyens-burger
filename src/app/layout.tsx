@@ -1,5 +1,25 @@
 import type { Metadata } from "next";
+import { Bebas_Neue, Outfit } from "next/font/google";
 import "./globals.css";
+
+// Polices auto-hébergées par Next (next/font) : téléchargées au build et
+// servies depuis notre propre domaine, avec préchargement automatique et
+// aucun aller-retour vers fonts.googleapis.com au chargement de la page —
+// remplace le <link> externe utilisé précédemment (qui restait un point de
+// dépendance réseau tiers, même préconnecté). Montserrat était chargée mais
+// jamais utilisée dans le CSS : retirée.
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+});
+const outfit = Outfit({
+  weight: ["200", "300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 const SITE_URL = "https://alyens-burger.vercel.app";
 
@@ -129,24 +149,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
-      <head>
-        {/* Polices Google chargées via <link> (préconnexion + priorité de découverte
-            immédiate par le navigateur) plutôt que par @import dans le CSS : un
-            @import est découvert tardivement (après le téléchargement + parsing de
-            globals.css) et retarde d'autant le chargement de la police, ce qui
-            allonge la fenêtre de FOUT (texte affiché avec la police de secours,
-            beaucoup moins condensée que Bebas Neue) — observée sur Android/Chrome
-            (réseau/cache différents de l'iPhone de test) sous forme de titre du
-            hero trop large et rogné à l'écran. */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font -- root layout, donc appliqué à tout le site, pas à une seule page */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&family=Outfit:wght@200;300;400;500;600;700&display=swap"
-        />
-      </head>
+    <html lang="fr" className={`${bebasNeue.variable} ${outfit.variable}`}>
       <body>
         <script
           type="application/ld+json"
