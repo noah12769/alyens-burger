@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-// TODO: remplacer par le domaine final une fois le déploiement confirmé (cf. plan, Phase 9)
-const SITE_URL = "https://alyens-burger.example";
+const SITE_URL = "https://alyens-burger.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

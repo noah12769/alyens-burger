@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /commander
 
-Sitemap: https://alyens-burger.example/sitemap.xml
+Sitemap: https://alyens-burger.vercel.app/sitemap.xml

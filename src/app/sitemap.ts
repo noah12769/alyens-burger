@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 
-// TODO: aligner avec le domaine final (cf. src/app/layout.tsx SITE_URL)
-const SITE_URL = "https://alyens-burger.example";
+const SITE_URL = "https://alyens-burger.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
