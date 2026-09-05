@@ -40,6 +40,10 @@ export const ALL_ITEMS: MenuItem[] = [...COMBO_MENUS, ...A_LA_CARTE_ITEMS, ...DE
 
 export const PAYMENT_METHODS = ["Espèces", "Carte bancaire", "Lien SumUp"] as const;
 
-export const WHATSAPP_NUMBER = "590690722870";
+// ⚠️ TEST TEMPORAIRE : numéro personnel de Noah, le temps de vérifier que
+// l'envoi WhatsApp depuis /commander fonctionne bien. À REMETTRE à
+// "590690722870" (et à supprimer le numéro personnel du code/historique
+// une fois le test validé).
+export const WHATSAPP_NUMBER = "REDACTED";
 export const WHATSAPP_ORDER_URL =
   "https://api.whatsapp.com/message/2NJV3INJIUY4P1?autoload=1&app_absent=0";
