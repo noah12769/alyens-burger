@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import "./commander.css";
 import {
@@ -42,10 +42,21 @@ const EMPTY_FORM: FormState = {
   paiement: "",
 };
 
-// ⚠️ MODE TEST : l'envoi automatique vers le vrai numéro WhatsApp est désactivé
-// tant que la maquette n'est pas validée (pour ne pas déclencher le bot en prod
-// à chaque essai). Repasser à true pour réactiver l'envoi réel.
-const WHATSAPP_SEND_ENABLED = false;
+// Envoi réel vers le numéro WhatsApp de la boutique. Repasser à false pour
+// revenir en mode test (aperçu du message sans redirection WhatsApp), par
+// exemple pour vérifier une future modification sans déclencher le bot.
+const WHATSAPP_SEND_ENABLED = true;
+
+// API adresse officielle du gouvernement français (Base Adresse Nationale) —
+// gratuite, sans clé, couvre la Guadeloupe. Utilisée pour l'autocomplétion
+// d'adresse et pour transformer une position GPS en adresse lisible.
+const ADDRESS_API = "https://api-adresse.data.gouv.fr";
+
+type AddressSuggestion = { id: string; label: string };
+
+type AddressFeature = {
+  properties: { id: string; label: string; context: string };
+};
 
 function formatPrice(value: number) {
   return `${value.toFixed(2).replace(/\.00$/, "").replace(".", ",")}€`;
@@ -59,6 +70,18 @@ export default function CommanderClient() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [previewMessage, setPreviewMessage] = useState<string | null>(null);
   const [geoStatus, setGeoStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [geoErrorMsg, setGeoErrorMsg] = useState("");
+  const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const suggestTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const suggestAbortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (suggestTimerRef.current) clearTimeout(suggestTimerRef.current);
+      suggestAbortRef.current?.abort();
+    };
+  }, []);
 
   const cartLines = useMemo(
     () =>
@@ -137,25 +160,87 @@ export default function CommanderClient() {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  const reverseGeocode = async (lat: number, lon: number): Promise<string | null> => {
+    try {
+      const res = await fetch(`${ADDRESS_API}/reverse/?lon=${lon}&lat=${lat}`);
+      if (!res.ok) return null;
+      const data: { features?: AddressFeature[] } = await res.json();
+      return data.features?.[0]?.properties.label ?? null;
+    } catch {
+      return null;
+    }
+  };
+
   const handleGeolocate = () => {
     if (!("geolocation" in navigator)) {
       setGeoStatus("error");
+      setGeoErrorMsg("La géolocalisation n'est pas disponible sur cet appareil — saisissez l'adresse manuellement.");
       return;
     }
     setGeoStatus("loading");
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      async (pos) => {
         const { latitude, longitude } = pos.coords;
-        const mapsLink = `https://maps.google.com/?q=${latitude.toFixed(6)},${longitude.toFixed(6)}`;
+        const label = await reverseGeocode(latitude, longitude);
         setForm((f) => ({
           ...f,
-          commune: f.commune.trim() ? `${f.commune.trim()} — ${mapsLink}` : mapsLink,
+          commune: label ?? `Position GPS : https://maps.google.com/?q=${latitude.toFixed(6)},${longitude.toFixed(6)}`,
         }));
+        setSuggestions([]);
+        setShowSuggestions(false);
         setGeoStatus("idle");
       },
-      () => setGeoStatus("error"),
+      (err) => {
+        setGeoStatus("error");
+        if (err.code === err.PERMISSION_DENIED) {
+          setGeoErrorMsg(
+            "Géolocalisation refusée — autorisez-la pour ce site dans les réglages de votre navigateur, ou saisissez l'adresse manuellement."
+          );
+        } else if (err.code === err.TIMEOUT) {
+          setGeoErrorMsg("La localisation a pris trop de temps — réessayez ou saisissez l'adresse manuellement.");
+        } else {
+          setGeoErrorMsg("Impossible de récupérer votre position — saisissez l'adresse manuellement.");
+        }
+      },
       { enableHighAccuracy: true, timeout: 10000 }
     );
+  };
+
+  const fetchSuggestions = async (query: string) => {
+    suggestAbortRef.current?.abort();
+    const controller = new AbortController();
+    suggestAbortRef.current = controller;
+    try {
+      const res = await fetch(
+        `${ADDRESS_API}/search/?q=${encodeURIComponent(query)}&limit=6`,
+        { signal: controller.signal }
+      );
+      if (!res.ok) return;
+      const data: { features?: AddressFeature[] } = await res.json();
+      const items = (data.features ?? [])
+        .filter((f) => f.properties.context.includes("Guadeloupe"))
+        .map((f) => ({ id: f.properties.id, label: f.properties.label }));
+      setSuggestions(items);
+    } catch (err) {
+      if ((err as Error).name !== "AbortError") setSuggestions([]);
+    }
+  };
+
+  const handleCommuneChange = (value: string) => {
+    setForm((f) => ({ ...f, commune: value }));
+    setShowSuggestions(true);
+    if (suggestTimerRef.current) clearTimeout(suggestTimerRef.current);
+    if (value.trim().length < 3) {
+      setSuggestions([]);
+      return;
+    }
+    suggestTimerRef.current = setTimeout(() => fetchSuggestions(value.trim()), 300);
+  };
+
+  const selectSuggestion = (label: string) => {
+    setForm((f) => ({ ...f, commune: label }));
+    setSuggestions([]);
+    setShowSuggestions(false);
   };
 
   return (
@@ -176,7 +261,7 @@ export default function CommanderClient() {
       </header>
 
       <div className="cmd-inner">
-        <p className="cmd-sub">Version test — sélection, panier, infos, puis envoi direct sur WhatsApp</p>
+        <p className="cmd-sub">Sélectionnez vos articles, remplissez vos informations, puis validez votre commande directement sur WhatsApp</p>
 
         {step === "products" && (
           <>
@@ -289,28 +374,38 @@ export default function CommanderClient() {
             </div>
             <div className="cmd-field">
               <label htmlFor="cmd-commune">Commune + localisation précise</label>
-              <div className="cmd-field-with-btn">
-                <input
-                  id="cmd-commune"
-                  type="text"
-                  placeholder="Ex : Gosier, quartier Bas du Fort... (ou géolocalisez-vous)"
-                  value={form.commune}
-                  onChange={(e) => setForm((f) => ({ ...f, commune: e.target.value }))}
-                />
-                <button
-                  type="button"
-                  className="cmd-geo-btn"
-                  onClick={handleGeolocate}
-                  disabled={geoStatus === "loading"}
-                >
-                  📍 {geoStatus === "loading" ? "Localisation..." : "Me géolocaliser"}
-                </button>
+              <div className="cmd-address-wrap">
+                <div className="cmd-field-with-btn">
+                  <input
+                    id="cmd-commune"
+                    type="text"
+                    autoComplete="off"
+                    placeholder="Ex : Gosier, quartier Bas du Fort... (ou géolocalisez-vous)"
+                    value={form.commune}
+                    onChange={(e) => handleCommuneChange(e.target.value)}
+                    onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true); }}
+                    onBlur={() => setShowSuggestions(false)}
+                  />
+                  <button
+                    type="button"
+                    className="cmd-geo-btn"
+                    onClick={handleGeolocate}
+                    disabled={geoStatus === "loading"}
+                  >
+                    📍 {geoStatus === "loading" ? "Localisation..." : "Me géolocaliser"}
+                  </button>
+                </div>
+                {showSuggestions && suggestions.length > 0 && (
+                  <ul className="cmd-suggestions">
+                    {suggestions.map((s) => (
+                      <li key={s.id} onMouseDown={(e) => { e.preventDefault(); selectSuggestion(s.label); }}>
+                        {s.label}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              {geoStatus === "error" && (
-                <p className="cmd-error">
-                  Impossible de récupérer votre position — autorisez la géolocalisation ou saisissez l&apos;adresse manuellement.
-                </p>
-              )}
+              {geoStatus === "error" && <p className="cmd-error">{geoErrorMsg}</p>}
             </div>
             <div className="cmd-field">
               <label htmlFor="cmd-remarques">Remarques (sauce, supplément, boisson, dessert)</label>

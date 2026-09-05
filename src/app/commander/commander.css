@@ -580,6 +580,39 @@
   }
 }
 
+.cmd-address-wrap {
+  position: relative;
+}
+
+.cmd-suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background: #161616;
+  border: 1px solid rgba(249, 244, 232, 0.2);
+  border-radius: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.cmd-suggestions li {
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: #f9f4e8;
+  cursor: pointer;
+}
+
+.cmd-suggestions li:hover {
+  background: rgba(46, 125, 50, 0.25);
+}
+
 .cmd-geo-btn {
   flex-shrink: 0;
   white-space: nowrap;
