@@ -266,7 +266,9 @@ a {
   text-transform: uppercase;
   text-align: center;
   line-height: 1;
-  letter-spacing: -2px;
+  /* Un espacement négatif collait les lettres entre elles sur cette police
+     déjà très condensée (Bebas Neue) — léger espace positif à la place. */
+  letter-spacing: 0.01em;
   text-shadow: 0 4px 40px rgba(0,0,0,0.6);
   /* Filet de sécurité : si jamais la police de secours (plus large que Bebas
      Neue) s'affiche brièvement avant le swap, un mot sans espace ("INTERSTELLAIRE")
@@ -426,7 +428,7 @@ a {
   font-size: 100px;
   font-weight: 900;
   line-height: 100%;
-  letter-spacing: -1px;
+  letter-spacing: 0.01em;
 }
 
 .heading.is-1 {
@@ -643,7 +645,7 @@ a {
   font-size: 64px;
   color: var(--beige);
   line-height: 1;
-  letter-spacing: -1px;
+  letter-spacing: 0.01em;
 }
 
 .location-block {
@@ -724,7 +726,7 @@ a {
   font-size: clamp(80px, 10vw, 160px);
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -2px;
+  letter-spacing: 0.01em;
 }
 
 .menu-subtext {
