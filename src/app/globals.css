@@ -95,21 +95,21 @@ a {
   width: 100%;
 }
 
-/* ── Desktop : logo/bouton calés sur la même largeur que la galerie
-   d'images de la section À propos (1758px = largeur naturelle de la
-   galerie, mesurée), centrés pareil donc mêmes bords qu'elle partout.
-   padding calculé (pas juste 0) : en dessous de ~1838px de large — donc
-   sur tout iPad, y compris les grands en 1024/1366px landscape/portrait,
-   qui tombent dans cette tranche « desktop » — le max-width ne fait
-   plus rien puisque l'écran est déjà plus étroit que 1758px, et un
-   padding fixe à 0 collait alors le logo/bouton au bord de l'écran.
-   Ce calc garde toujours au moins 40px, et ne redescend à 0 qu'une fois
-   l'écran assez large pour que le contenu de 1758px soit déjà centré
-   avec de la marge tout seul. ── */
+/* ── Desktop : padding fixe (40px, jamais 0), et une largeur de bloc
+   plafonnée à 1840px (= 1920px de large, le format desktop de référence,
+   moins 2x40px) pour que l'écartement logo/bouton n'aille jamais plus
+   loin que son rendu à 1920px. Sur un écran plus large (ultra-wide), le
+   bloc entier se recentre tel quel — plus large seulement à cause des
+   marges extérieures qui grandissent, pas parce que le logo et le
+   bouton s'écartent davantage l'un de l'autre.
+   (Avant : le padding était un calc() basé sur 100vw en plus d'un
+   max-width — les deux combinés soustrayaient deux fois le même espace
+   sur les écrans très larges, ce qui écrasait logo+bouton l'un contre
+   l'autre au centre au lieu de les garder à leurs bords.) ── */
 @media screen and (min-width: 992px) {
   .header-inner {
-    max-width: 1758px;
-    padding: 0 max(var(--container-pad), calc((100vw - 1758px) / 2));
+    max-width: 1840px;
+    padding: 0 var(--container-pad);
   }
 }
 
