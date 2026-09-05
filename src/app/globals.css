@@ -1674,7 +1674,7 @@ nextjs-portal { display: none !important; }
   }
   .horizontal-track {
     position: absolute;
-    bottom: 0;
+    bottom: 40px;
     left: 0;
     padding: 0;
     gap: 16px;

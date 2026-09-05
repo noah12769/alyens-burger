@@ -172,13 +172,13 @@
 /* ── Grille produits : cartes carrées, 2 par ligne dès la tablette ── */
 .cmd-product-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 @media screen and (min-width: 560px) {
   .cmd-product-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 
@@ -467,11 +467,8 @@
   bottom: 0;
   z-index: 90;
   padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.5);
+  background: #000;
+  border-top: 1px solid rgba(249, 244, 232, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
