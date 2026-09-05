@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import "./commander.css";
 import {
@@ -19,6 +19,27 @@ const ZONES = [
   "Zone 2 — Abymes / Lamentin / Gosier / Petit-Bourg",
   "Multivers — hors zone (minimum 50€ de panier)",
 ] as const;
+
+// Les 32 communes de Guadeloupe (liste officielle, via l'API Geo du
+// gouvernement français) — la localisation précise (quartier, repère) se fait
+// directement sur WhatsApp avec le bot, pas sur le site : ce champ ne sert
+// qu'à indiquer la commune.
+const GUADELOUPE_COMMUNES = [
+  "Anse-Bertrand", "Baie-Mahault", "Baillif", "Basse-Terre", "Bouillante",
+  "Capesterre-Belle-Eau", "Capesterre-de-Marie-Galante", "Deshaies", "Gourbeyre",
+  "Goyave", "Grand-Bourg", "La Désirade", "Lamentin", "Le Gosier", "Le Moule",
+  "Les Abymes", "Morne-à-l'Eau", "Petit-Bourg", "Petit-Canal", "Pointe-Noire",
+  "Pointe-à-Pitre", "Port-Louis", "Saint-Claude", "Saint-François", "Saint-Louis",
+  "Sainte-Anne", "Sainte-Rose", "Terre-de-Bas", "Terre-de-Haut", "Trois-Rivières",
+  "Vieux-Fort", "Vieux-Habitants",
+];
+
+// Enlève les accents (NFD + suppression des marques diacritiques U+0300–U+036F)
+// pour une recherche de commune plus tolérante ("gosier" doit matcher "Le
+// Gosier", "abymes" doit matcher "Les Abymes", etc.).
+function normalize(value: string) {
+  return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
 
 type Step = "products" | "cart" | "form";
 
@@ -47,17 +68,6 @@ const EMPTY_FORM: FormState = {
 // exemple pour vérifier une future modification sans déclencher le bot.
 const WHATSAPP_SEND_ENABLED = true;
 
-// API adresse officielle du gouvernement français (Base Adresse Nationale) —
-// gratuite, sans clé, couvre la Guadeloupe. Utilisée pour l'autocomplétion
-// d'adresse et pour transformer une position GPS en adresse lisible.
-const ADDRESS_API = "https://api-adresse.data.gouv.fr";
-
-type AddressSuggestion = { id: string; label: string };
-
-type AddressFeature = {
-  properties: { id: string; label: string; context: string };
-};
-
 function formatPrice(value: number) {
   return `${value.toFixed(2).replace(/\.00$/, "").replace(".", ",")}€`;
 }
@@ -69,19 +79,13 @@ export default function CommanderClient() {
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [previewMessage, setPreviewMessage] = useState<string | null>(null);
-  const [geoStatus, setGeoStatus] = useState<"idle" | "loading" | "error">("idle");
-  const [geoErrorMsg, setGeoErrorMsg] = useState("");
-  const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const suggestTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const suggestAbortRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (suggestTimerRef.current) clearTimeout(suggestTimerRef.current);
-      suggestAbortRef.current?.abort();
-    };
-  }, []);
+  const communeSuggestions = useMemo(() => {
+    const query = normalize(form.commune.trim());
+    if (!query) return [];
+    return GUADELOUPE_COMMUNES.filter((name) => normalize(name).includes(query)).slice(0, 8);
+  }, [form.commune]);
 
   const cartLines = useMemo(
     () =>
@@ -129,17 +133,15 @@ export default function CommanderClient() {
 
   const buildMessage = () => {
     const menuLines = cartLines.map((line) => `${line.qty}x ${line.item.name}`).join(", ");
-    const menuDetail = form.remarques.trim()
-      ? `${menuLines} — Remarques : ${form.remarques.trim()}`
-      : menuLines;
+    const remarquesPart = form.remarques.trim() ? ` (remarques : ${form.remarques.trim()})` : "";
 
-    return [
-      `1 - Nom : ${form.nom.trim()} ${form.prenom.trim()}`,
-      `2 - Numéro de téléphone : ${form.telephone.trim()}`,
-      `3 - Commune de livraison + localisation : ${form.zone} — ${form.commune.trim()}`,
-      `4 - Menu : ${menuDetail}`,
-      `5 - Mode de paiement : ${form.paiement}`,
-    ].join("\n");
+    return (
+      `Bonsoir, j'aimerais commander ${menuLines}${remarquesPart}. ` +
+      `Au nom de ${form.nom.trim()} ${form.prenom.trim()}, ` +
+      `numéro de téléphone ${form.telephone.trim()}, ` +
+      `commune de livraison : ${form.commune.trim()} (${form.zone}), ` +
+      `moyen de paiement : ${form.paiement}.`
+    );
   };
 
   const confirmOrder = () => {
@@ -160,86 +162,13 @@ export default function CommanderClient() {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  const reverseGeocode = async (lat: number, lon: number): Promise<string | null> => {
-    try {
-      const res = await fetch(`${ADDRESS_API}/reverse/?lon=${lon}&lat=${lat}`);
-      if (!res.ok) return null;
-      const data: { features?: AddressFeature[] } = await res.json();
-      return data.features?.[0]?.properties.label ?? null;
-    } catch {
-      return null;
-    }
-  };
-
-  const handleGeolocate = () => {
-    if (!("geolocation" in navigator)) {
-      setGeoStatus("error");
-      setGeoErrorMsg("La géolocalisation n'est pas disponible sur cet appareil — saisissez l'adresse manuellement.");
-      return;
-    }
-    setGeoStatus("loading");
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const { latitude, longitude } = pos.coords;
-        const label = await reverseGeocode(latitude, longitude);
-        setForm((f) => ({
-          ...f,
-          commune: label ?? `Position GPS : https://maps.google.com/?q=${latitude.toFixed(6)},${longitude.toFixed(6)}`,
-        }));
-        setSuggestions([]);
-        setShowSuggestions(false);
-        setGeoStatus("idle");
-      },
-      (err) => {
-        setGeoStatus("error");
-        if (err.code === err.PERMISSION_DENIED) {
-          setGeoErrorMsg(
-            "Géolocalisation refusée — autorisez-la pour ce site dans les réglages de votre navigateur, ou saisissez l'adresse manuellement."
-          );
-        } else if (err.code === err.TIMEOUT) {
-          setGeoErrorMsg("La localisation a pris trop de temps — réessayez ou saisissez l'adresse manuellement.");
-        } else {
-          setGeoErrorMsg("Impossible de récupérer votre position — saisissez l'adresse manuellement.");
-        }
-      },
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  };
-
-  const fetchSuggestions = async (query: string) => {
-    suggestAbortRef.current?.abort();
-    const controller = new AbortController();
-    suggestAbortRef.current = controller;
-    try {
-      const res = await fetch(
-        `${ADDRESS_API}/search/?q=${encodeURIComponent(query)}&limit=6`,
-        { signal: controller.signal }
-      );
-      if (!res.ok) return;
-      const data: { features?: AddressFeature[] } = await res.json();
-      const items = (data.features ?? [])
-        .filter((f) => f.properties.context.includes("Guadeloupe"))
-        .map((f) => ({ id: f.properties.id, label: f.properties.label }));
-      setSuggestions(items);
-    } catch (err) {
-      if ((err as Error).name !== "AbortError") setSuggestions([]);
-    }
-  };
-
   const handleCommuneChange = (value: string) => {
     setForm((f) => ({ ...f, commune: value }));
     setShowSuggestions(true);
-    if (suggestTimerRef.current) clearTimeout(suggestTimerRef.current);
-    if (value.trim().length < 3) {
-      setSuggestions([]);
-      return;
-    }
-    suggestTimerRef.current = setTimeout(() => fetchSuggestions(value.trim()), 300);
   };
 
-  const selectSuggestion = (label: string) => {
-    setForm((f) => ({ ...f, commune: label }));
-    setSuggestions([]);
+  const selectSuggestion = (name: string) => {
+    setForm((f) => ({ ...f, commune: name }));
     setShowSuggestions(false);
   };
 
@@ -373,39 +302,31 @@ export default function CommanderClient() {
               </select>
             </div>
             <div className="cmd-field">
-              <label htmlFor="cmd-commune">Commune + localisation précise</label>
+              <label htmlFor="cmd-commune">Commune de livraison</label>
+              <p className="cmd-field-hint">
+                La localisation précise (quartier, repère) se donnera directement sur WhatsApp.
+              </p>
               <div className="cmd-address-wrap">
-                <div className="cmd-field-with-btn">
-                  <input
-                    id="cmd-commune"
-                    type="text"
-                    autoComplete="off"
-                    placeholder="Ex : Gosier, quartier Bas du Fort... (ou géolocalisez-vous)"
-                    value={form.commune}
-                    onChange={(e) => handleCommuneChange(e.target.value)}
-                    onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true); }}
-                    onBlur={() => setShowSuggestions(false)}
-                  />
-                  <button
-                    type="button"
-                    className="cmd-geo-btn"
-                    onClick={handleGeolocate}
-                    disabled={geoStatus === "loading"}
-                  >
-                    📍 {geoStatus === "loading" ? "Localisation..." : "Me géolocaliser"}
-                  </button>
-                </div>
-                {showSuggestions && suggestions.length > 0 && (
+                <input
+                  id="cmd-commune"
+                  type="text"
+                  autoComplete="off"
+                  placeholder="Ex : Gosier, Le Moule, Baie-Mahault..."
+                  value={form.commune}
+                  onChange={(e) => handleCommuneChange(e.target.value)}
+                  onFocus={() => setShowSuggestions(true)}
+                  onBlur={() => setShowSuggestions(false)}
+                />
+                {showSuggestions && communeSuggestions.length > 0 && (
                   <ul className="cmd-suggestions">
-                    {suggestions.map((s) => (
-                      <li key={s.id} onMouseDown={(e) => { e.preventDefault(); selectSuggestion(s.label); }}>
-                        {s.label}
+                    {communeSuggestions.map((name) => (
+                      <li key={name} onMouseDown={(e) => { e.preventDefault(); selectSuggestion(name); }}>
+                        {name}
                       </li>
                     ))}
                   </ul>
                 )}
               </div>
-              {geoStatus === "error" && <p className="cmd-error">{geoErrorMsg}</p>}
             </div>
             <div className="cmd-field">
               <label htmlFor="cmd-remarques">Remarques (sauce, supplément, boisson, dessert)</label>

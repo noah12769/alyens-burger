@@ -565,19 +565,11 @@
   min-height: 80px;
 }
 
-.cmd-field-with-btn {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-@media screen and (min-width: 560px) {
-  .cmd-field-with-btn {
-    flex-direction: row;
-  }
-  .cmd-field-with-btn input {
-    flex: 1;
-  }
+.cmd-field-hint {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: rgba(249, 244, 232, 0.5);
+  margin: -4px 0 8px;
 }
 
 .cmd-address-wrap {
@@ -612,21 +604,6 @@
 .cmd-suggestions li:hover {
   background: rgba(46, 125, 50, 0.25);
 }
-
-.cmd-geo-btn {
-  flex-shrink: 0;
-  white-space: nowrap;
-  padding: 12px 16px;
-  border-radius: 6px;
-  border: 1px solid rgba(249, 244, 232, 0.25);
-  background: rgba(249, 244, 232, 0.06);
-  color: #f9f4e8;
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-}
-.cmd-geo-btn:hover { background: rgba(249, 244, 232, 0.12); }
-.cmd-geo-btn:disabled { opacity: 0.5; cursor: wait; }
 
 .cmd-radio-group {
   display: flex;
