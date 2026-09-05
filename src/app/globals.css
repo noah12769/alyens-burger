@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&family=Outfit:wght@200;300;400;500;600;700&display=swap');
+/* Bebas Neue / Montserrat / Outfit sont chargées via <link> dans layout.tsx
+   (voir commentaire là-bas) plutôt que par @import ici. */
 
 @font-face {
   font-family: 'Frunch';
@@ -63,11 +64,11 @@ a {
 /* ===== HEADER ===== */
 .header {
   background-color: transparent;
-  width: 100%;
   padding-top: 12px;
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 1000;
 }
 
@@ -323,6 +324,11 @@ a {
   line-height: 1;
   letter-spacing: -2px;
   text-shadow: 0 4px 40px rgba(0,0,0,0.6);
+  /* Filet de sécurité : si jamais la police de secours (plus large que Bebas
+     Neue) s'affiche brièvement avant le swap, un mot sans espace ("INTERSTELLAIRE")
+     peut casser au lieu de déborder hors écran. */
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .hero-buttons {
@@ -378,7 +384,6 @@ a {
   right: 0;
   z-index: 999;
   background: linear-gradient(rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
-  width: 100%;
   height: 140px;
   pointer-events: none;
 }
@@ -989,11 +994,7 @@ nextjs-portal { display: none !important; }
 /* ===== POPUP - DELIVERY ===== */
 .popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
+  inset: 0;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1123,9 +1124,6 @@ nextjs-portal { display: none !important; }
 .directions-overlay {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1550,6 +1548,16 @@ nextjs-portal { display: none !important; }
   }
   .menu-heading {
     font-size: 38px;
+  }
+
+  /* ── Hero : titre réduit pour ne jamais déborder sur petit écran, padding
+     minimum en bas (symétrique du padding de la navbar en haut) ── */
+  .hero-title-text {
+    font-size: 15vw;
+  }
+  .hero-container {
+    padding: 100px 0 32px;
+    box-sizing: border-box;
   }
 
   /* ── Hero : boutons resserrés pour tenir sur les petits écrans (ex. Android ~360px) ── */

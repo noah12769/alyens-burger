@@ -130,6 +130,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        {/* Polices Google chargées via <link> (préconnexion + priorité de découverte
+            immédiate par le navigateur) plutôt que par @import dans le CSS : un
+            @import est découvert tardivement (après le téléchargement + parsing de
+            globals.css) et retarde d'autant le chargement de la police, ce qui
+            allonge la fenêtre de FOUT (texte affiché avec la police de secours,
+            beaucoup moins condensée que Bebas Neue) — observée sur Android/Chrome
+            (réseau/cache différents de l'iPhone de test) sous forme de titre du
+            hero trop large et rogné à l'écran. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font -- root layout, donc appliqué à tout le site, pas à une seule page */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&family=Outfit:wght@200;300;400;500;600;700&display=swap"
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"
