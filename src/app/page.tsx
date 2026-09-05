@@ -123,10 +123,7 @@ export default function Home() {
             onEnded={handleVideoEnded}
             style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
           >
-            <source
-              src="https://d8j0ntlcm91z4.cloudfront.net/user_3DHhT3EJPzYGodVzhAVwQwAcFA3/hf_20260516_190308_01149ee0-f793-41f7-84e2-f4deb03d8785.mp4"
-              type="video/mp4"
-            />
+            <source src="/videos/hero-burger.mp4" type="video/mp4" />
           </video>
         </div>
         <div className="hero-container">
@@ -179,12 +176,16 @@ export default function Home() {
             <h1 className="heading is-brand">ALIEN&apos;S BURGER</h1>
           </div>
 
+          {/* sizes fixe : ces images sont affichées à height:85% de la section
+              (largeur qui suit), jamais plus large qu'environ 500px à l'écran —
+              sans ce indice, next/image supposait 100vw et servait la version
+              3840px la plus lourde même sur des écrans où l'image fait 300px. */}
           <div className="horizontal-track" ref={galleryRef}>
-            <Image src="/images/IMG_9944.jpg" alt="Burger Alien's Burger 1" width={899} height={1653} className="image-type-1" />
-            <Image src="/images/IMG_9938.jpg" alt="Burger Alien's Burger 2" width={1282} height={1700} className="image-type-2" />
-            <Image src="/images/IMG_9945.jpg" alt="Burger Alien's Burger 3" width={1282} height={1700} className="image-type-1 is-2" />
-            <Image src="/images/IMG_9941.jpg" alt="Burger Alien's Burger 4" width={971} height={1346} className="image-type-2" />
-            <Image src="/images/IMG_9939.jpg" alt="Burger Alien's Burger 5" width={957} height={1302} className="image-type-1" />
+            <Image src="/images/IMG_9944.jpg" alt="Burger Alien's Burger 1" width={899} height={1653} sizes="500px" className="image-type-1" />
+            <Image src="/images/IMG_9938.jpg" alt="Burger Alien's Burger 2" width={1282} height={1700} sizes="500px" className="image-type-2" />
+            <Image src="/images/IMG_9945.jpg" alt="Burger Alien's Burger 3" width={1282} height={1700} sizes="500px" className="image-type-1 is-2" />
+            <Image src="/images/IMG_9941.jpg" alt="Burger Alien's Burger 4" width={971} height={1346} sizes="500px" className="image-type-2" />
+            <Image src="/images/IMG_9939.jpg" alt="Burger Alien's Burger 5" width={957} height={1302} sizes="500px" className="image-type-1" />
           </div>
         </div>
       </section>
@@ -201,6 +202,7 @@ export default function Home() {
               alt="Alien's Burger — livraison en Guadeloupe"
               width={906}
               height={1588}
+              sizes="(max-width: 767px) 100vw, 420px"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
