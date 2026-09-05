@@ -196,8 +196,11 @@ a {
 .button-text-wrap {
   position: relative;
   overflow: hidden;
-  height: 20px;
+  height: 24px;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-front {
@@ -1733,22 +1736,26 @@ nextjs-portal { display: none !important; }
     display: flex;
     justify-content: center;
   }
+  /* Photo en pleine largeur en haut, infos empilées les unes sous les
+     autres en dessous (au lieu d'un côte-à-côte photo/texte qui écrasait
+     le texte dans une colonne trop étroite et rendait la section trop
+     haute) */
   .location-inner {
-    flex-direction: row;
-    gap: 16px;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
   }
   .location-photo {
-    width: 48%;
+    width: 100%;
     height: auto;
-    aspect-ratio: 3 / 4;
-    min-height: 200px;
+    aspect-ratio: 3 / 2;
+    min-height: unset;
     flex-shrink: 0;
   }
   .location-info-col {
-    width: 52%;
+    width: 100%;
     gap: 20px;
     flex: unset;
     min-width: 0;
