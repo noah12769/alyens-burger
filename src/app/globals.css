@@ -97,11 +97,19 @@ a {
 
 /* ── Desktop : logo/bouton calés sur la même largeur que la galerie
    d'images de la section À propos (1758px = largeur naturelle de la
-   galerie, mesurée), centrés pareil donc mêmes bords qu'elle partout ── */
+   galerie, mesurée), centrés pareil donc mêmes bords qu'elle partout.
+   padding calculé (pas juste 0) : en dessous de ~1838px de large — donc
+   sur tout iPad, y compris les grands en 1024/1366px landscape/portrait,
+   qui tombent dans cette tranche « desktop » — le max-width ne fait
+   plus rien puisque l'écran est déjà plus étroit que 1758px, et un
+   padding fixe à 0 collait alors le logo/bouton au bord de l'écran.
+   Ce calc garde toujours au moins 40px, et ne redescend à 0 qu'une fois
+   l'écran assez large pour que le contenu de 1758px soit déjà centré
+   avec de la marge tout seul. ── */
 @media screen and (min-width: 992px) {
   .header-inner {
     max-width: 1758px;
-    padding: 0;
+    padding: 0 max(var(--container-pad), calc((100vw - 1758px) / 2));
   }
 }
 
@@ -537,7 +545,8 @@ a {
 .image-type-1 {
   object-fit: cover;
   object-position: 100% 50%;
-  width: 300px;
+  aspect-ratio: 3 / 5;
+  width: auto;
   height: 500px;
   flex-shrink: 0;
 }
@@ -552,6 +561,21 @@ a {
   height: 500px;
   flex-shrink: 0;
   object-fit: cover;
+}
+
+/* ── Tablette/iPad (portrait ET paysage — un iPad Pro fait 1024 ou 1366px
+   de large, donc au-delà du seuil "tablette" de 991px utilisé ailleurs) :
+   les 5 images tenaient à une largeur fixe de 500px de haut, ce qui les
+   faisait déborder de l'écran (seules 3 sur 5 visibles). Hauteur fluide,
+   qui rétrécit avec la largeur d'écran pour que les 5 tiennent toujours
+   entières — jusqu'à ~1900px de large où elle rejoint les 500px fixes
+   d'origine (rendu desktop inchangé). Le mobile (≤767px, défilement
+   automatique) garde sa propre taille fixe, définie plus bas. ── */
+@media screen and (min-width: 768px) {
+  .image-type-1,
+  .image-type-2 {
+    height: clamp(180px, calc(27vw - 30px), 500px);
+  }
 }
 
 /* Varied border-radius per gallery image */
