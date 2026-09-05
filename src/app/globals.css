@@ -1823,6 +1823,17 @@ nextjs-portal { display: none !important; }
   .footer-social { justify-content: center; }
   .footer-social-div { align-items: center; }
 
+  /* Sur desktop, .incipit-div reste position:absolute (collée à 3% du bas
+     de la section, quelle que soit la hauteur du contenu au-dessus). Sur
+     mobile, les 3 blocs du footer s'empilent et leur hauteur varie —
+     un pourcentage absolu donnait un espacement avec le numéro de
+     téléphone tantôt trop petit, tantôt trop grand, selon le contenu.
+     Repassée en flux normal avec une vraie marge fixe, ajustable. */
+  .incipit-div {
+    position: static;
+    margin-top: 48px;
+  }
+
   .incipit-inner {
     flex-direction: column;
     text-align: center;
